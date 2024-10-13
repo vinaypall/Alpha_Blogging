@@ -1,6 +1,6 @@
 const {Router} = require("express");
 const User = require("../models/user");
-
+const {createTokenforuser} = require("../services/auth")
 const router = Router();
 
 router.get("/signin",(req,res)=>{
@@ -17,7 +17,9 @@ router.post("/signup",async(req,res)=>{
         email,
         password
     });
-    return res.redirect("/"); 
+    const token = await User.matchPasswordAndGenerateToken(email,password);
+    return res.cookie("token",token).redirect("/");
+   
 })
 
 router.post("/signin",async(req,res)=>{
@@ -32,5 +34,8 @@ router.post("/signin",async(req,res)=>{
     }
 });
 
+router.get("/logout",(req,res)=>{
+    res.clearCookie("token").redirect("/");
+})
 
 module.exports = router

@@ -1,8 +1,11 @@
 const express = require("express");
 const path = require("path");
 const userRoute = require("./routes/user");
+const blogRouter = require("./routes/blog");
+const Blogs = require("./models/blog")
 const { connectToMongodb } = require("./connection");
-
+const cookieParser = require("cookie-parser");
+const {checkForAuthentication} = require("./middleware/auth")
 
 connectToMongodb("mongodb://127.0.0.1:27017/AlphaBlogging").then(()=>{
     console.log("Mongodb connected successfully...") 
@@ -15,15 +18,25 @@ app.use(express.urlencoded({
     extended:false
 }));
 
+
+
 app.set("view engine","ejs");
 app.set("views",path.resolve("./views"));
+app.use(cookieParser());
+app.use(checkForAuthentication("token"));
 
-app.get("/",(req,res)=>{
-    res.render("home.ejs")
+app.use(express.static(path.resolve('./public')));
+
+app.get("/",async (req,res)=>{
+    const allBlogs = await Blogs.find({});
+    res.render("home.ejs",{
+        user:req.user,
+        blogs:allBlogs
+    });
 })
 
 app.use("/user",userRoute);
-
+app.use("/blog",blogRouter);
 
 app.listen(port,()=>{
     console.log(`server started at ${port}...`)

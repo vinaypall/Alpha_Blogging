@@ -1,12 +1,13 @@
 const jwt = require("jsonwebtoken");
-
 const secret = "SDET@123";
 
 function createTokenforuser(user) {
     const payload = { _id: user._id, 
+        fullName:user.fullName,
         email:user.email,
         profileImageURL:user.profileImageURL,
         role:user.role
+
     };
 
     const token = jwt.sign(payload, secret, { expiresIn: '1h' });
