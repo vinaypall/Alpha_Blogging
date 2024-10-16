@@ -11,12 +11,18 @@ router.get("/signup",(req,res)=>{
 });
 
 router.post("/signup",async(req,res)=>{
-    const {fullName,email,password} = req.body; 
-    await User.create({
-        fullName,
-        email,
-        password
-    });
+    const {fullName,email,password} = req.body;
+    try {
+        await User.create({
+            fullName,
+            email,
+            password
+        });
+    } catch (error) {
+        return res.render("signUp.ejs",{
+            error:"Email Already Exists"
+        });
+    }
     const token = await User.matchPasswordAndGenerateToken(email,password);
     return res.cookie("token",token).redirect("/");
    

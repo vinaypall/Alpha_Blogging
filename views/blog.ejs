@@ -1,0 +1,17 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <%- include("./partials/head.ejs") %>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Blog </title>
+</head>
+<body>
+    <%- include("./partials/nav") %> <%- include("./partials/script") %>
+    <div class="container mt-4">
+        <h1><%= blog.title %></h1>
+        <img src="<%= blog.coverImageUrl %>" width="400px" alt="coverImageUrl" ><br>
+        <pclass="mt-3"><%= blog.body %></p>
+    </div>
+    
+</html>
