@@ -1,45 +1,105 @@
-<nav class="navbar navbar-expand-lg bg-body-tertiary ">
+<style>
+    /* Custom Styling */
+    .navbar {
+      background-color: #343a40; /* Darker background for a premium look */
+    }
+  
+    .navbar-brand {
+      font-family: 'Poppins', sans-serif;
+      font-size: 1.5rem;
+      font-weight: bold;
+      color: #f8f9fa !important;
+    }
+  
+    .nav-link {
+      color: #ced4da !important;
+      font-size: 1rem;
+      font-weight: 500;
+      transition: color 0.3s;
+    }
+  
+    .nav-link:hover {
+      color: #f8f9fa !important; /* Bright white on hover */
+    }
+  
+    .dropdown-menu {
+      background-color: #495057;
+    }
+  
+    .dropdown-item {
+      color: #f8f9fa !important;
+    }
+  
+    .dropdown-item:hover {
+      background-color: #6c757d;
+    }
+  
+    .alert-danger {
+      background-color: #f8d7da;
+      border-color: #f5c2c7;
+      color: #842029;
+      box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1); /* Subtle shadow for a lifted effect */
+    }
+  </style>
+  
+  <nav class="navbar navbar-expand-lg">
     <div class="container-fluid">
       <a class="navbar-brand" href="#">Alpha Blogging</a>
-      <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNavDropdown" aria-controls="navbarNavDropdown" aria-expanded="false" aria-label="Toggle navigation">
+      <button
+        class="navbar-toggler"
+        type="button"
+        data-bs-toggle="collapse"
+        data-bs-target="#navbarNavDropdown"
+        aria-controls="navbarNavDropdown"
+        aria-expanded="false"
+        aria-label="Toggle navigation"
+      >
         <span class="navbar-toggler-icon"></span>
       </button>
       <div class="collapse navbar-collapse" id="navbarNavDropdown">
-        <ul class="navbar-nav">
+        <ul class="navbar-nav ms-auto">
           <li class="nav-item">
             <a class="nav-link active" aria-current="page" href="/">Home</a>
           </li>
           <% if (locals.user) { %>
             <li class="nav-item">
-              <a class="nav-link" href="/blog/add-new">Add Bloggs</a>
+              <a class="nav-link" href="/blog/add-new">Add Blog</a>
             </li>
             <li class="nav-item dropdown">
-              <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-                 <%= locals.user.fullName %>
+              <a
+                class="nav-link dropdown-toggle"
+                href="#"
+                role="button"
+                data-bs-toggle="dropdown"
+                aria-expanded="false"
+              >
+                <%= locals.user.fullName %>
               </a>
               <ul class="dropdown-menu">
-                <li><a class="dropdown-item" href="/user/logout">Logged out</a></li>
+                <li>
+                  <a class="dropdown-item" href="/user/logout">Logout</a>
+                </li>
               </ul>
             </li>
-          <% } else {%>
+          <% } else { %>
             <li class="nav-item">
               <a class="nav-link" href="/user/signup">Create Account</a>
             </li>
             <li class="nav-item">
-              <a class="nav-link" href="/user/signin">login</a>
+              <a class="nav-link" href="/user/signin">Login</a>
             </li>
-            <% }%>
-          
-          
+          <% } %>
         </ul>
       </div>
     </div>
   </nav>
-
+  
   <% if (locals.error) { %>
     <div class="container mt-4">
-      <div class="alert alert-danger" role="alert">
-        <%= locals.error %>
+      <div class="alert alert-danger text-center" role="alert">
+        <strong>Error:</strong> <%= locals.error %>
       </div>
     </div>
   <% } %>
+  
+  
