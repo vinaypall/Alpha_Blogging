@@ -36,9 +36,30 @@ app.use(express.static(path.resolve('./public')));
 //         blogs:allBlogs
 //     });
 // })
-app.get("/",(req,res)=>{
-    res.send("hello world"); 
+app.get("/", async (req, res) => {
+    try {
+        // Fetch all blogs from the database
+        const allBlogs = await Blogs.find({});
+        
+        // Render the home page with user and blog data
+        res.render("home.ejs", {
+            user: req.user || null, // Ensure user is null if not authenticated
+            blogs: allBlogs
+        });
+    } catch (error) {
+        // Log the error for debugging
+        console.error("Error fetching blogs:", error);
+        
+        // Render an error page or redirect to an error route
+        res.status(500).render("error.ejs", {
+            message: "Unable to retrieve blogs at this moment. Please try again later."
+        });
+    }
 });
+
+// app.get("/",(req,res)=>{
+//     res.send("hello world"); 
+// });
 
 app.use("/user",userRoute);
 app.use("/blog",blogRouter);
