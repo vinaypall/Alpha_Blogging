@@ -34,7 +34,7 @@ router.post("/signin",async(req,res)=>{
         const token = await User.matchPasswordAndGenerateToken(email,password);
         return res.cookie("token",token).redirect("/");
     } catch (error) {
-        return res.render("signin.ejs",{
+        return res.render("signIn.ejs",{
             error:"Incorrect Password or Email"
         })
     }
