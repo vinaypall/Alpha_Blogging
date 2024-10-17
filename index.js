@@ -1,3 +1,5 @@
+require("dotenv").config();
+
 const express = require("express");
 const path = require("path");
 const userRoute = require("./routes/user");
@@ -7,12 +9,12 @@ const { connectToMongodb } = require("./connection");
 const cookieParser = require("cookie-parser");
 const {checkForAuthentication} = require("./middleware/auth")
 
-connectToMongodb("mongodb://127.0.0.1:27017/AlphaBlogging").then(()=>{
+connectToMongodb(process.env.MONGO_URL).then(()=>{
     console.log("Mongodb connected successfully...") 
 })
 
 const app = express();
-const port = 8000;
+const port = process.env.PORT||8000;
 
 app.use(express.urlencoded({
     extended:false
