@@ -29,13 +29,16 @@ app.use(checkForAuthentication("token"));
 
 app.use(express.static(path.resolve('./public')));
 
-app.get("/",async (req,res)=>{
-    const allBlogs = await Blogs.find({});
-    res.render("home.ejs",{
-        user:req.user,
-        blogs:allBlogs
-    });
-})
+// app.get("/",async (req,res)=>{
+//     const allBlogs = await Blogs.find({});
+//     res.render("home.ejs",{
+//         user:req.user,
+//         blogs:allBlogs
+//     });
+// })
+app.get("/",(req,res)=>{
+    res.send("hello world"); 
+});
 
 app.use("/user",userRoute);
 app.use("/blog",blogRouter);
